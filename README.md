@@ -11,16 +11,10 @@ other terminal, just on an e-ink screen.
 
 ## How it works
 
-```
- reMarkable 2                  Wi-Fi / LAN                 Host machine (your Mac)
-┌────────────────┐                                       ┌──────────────────────┐
-│ terminal app    │   ssh -t yourmac.local remarklaude   │  bin/remarklaude      │
-│ (fingerterm /   │ ─────────────────────────────────▶   │  (this repo's wrapper)│
-│  ReTerm)        │ ◀─────────────────────────────────   │       │               │
-└────────────────┘        plain text, one block           │       ▼               │
-                            per message, no TUI            │  `claude` CLI         │
-                                                            └──────────────────────┘
-```
+You run a terminal app (fingerterm / ReTerm) on the reMarkable, which SSHes
+into your host machine and launches `bin/remarklaude` — a small wrapper
+around the `claude` CLI. Each message you type is sent over that SSH
+connection, and the wrapper prints back a single block of plain text.
 
 The Claude Code CLI's normal interactive mode is a live-redrawing TUI
 (spinners, animated tool-call boxes) — great in a fast terminal, rough on
