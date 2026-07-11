@@ -37,12 +37,14 @@ run `/new`.
   under **Settings → About → Copyright and licenses → GPLv3 Compliance** on
   the device, or **Settings → Help → Copyrights and licenses** on newer
   firmware).
-- [Toltec](https://toltec-dev.org/) installed on the reMarkable, for a
-  terminal emulator. Follow the official
-  [Toltec install guide](https://toltec-dev.org/) or
-  [remarkable.guide's Toltec page](https://remarkable.guide/guide/software/toltec.html)
-  for the bootstrap step — that command is version/firmware-sensitive, so
-  it's not worth hard-coding here.
+- [Vellum](https://github.com/vellum-dev/vellum-cli) installed on the
+  reMarkable, for a terminal emulator. Vellum is the current
+  package manager for the reMarkable — **not Toltec**: Toltec only supports
+  OS builds up to `3.3.2.1666` and can soft-brick newer devices. Check
+  `vellum-cli`'s README for the exact bootstrap command (it changes with
+  releases, so it's not worth hard-coding here) — copy it from the source
+  yourself rather than from a paraphrase, since it includes a checksum
+  verification step that has to be exact.
 - The host machine has the `claude` CLI installed and already authenticated
   (if you're reading this, yours already is).
 
@@ -67,17 +69,21 @@ run `/new`.
 
 ## 2. reMarkable setup
 
-1. Bootstrap Toltec (see the official guide linked above).
+1. Check which firmware version you're on (**Settings → General → Software
+   version**), then confirm Toltec vs. Vellum compatibility for that version
+   before installing anything — Toltec caps out around `3.3.2.1666`; newer
+   firmware needs Vellum. Bootstrap whichever applies (Vellum:
+   [vellum-cli](https://github.com/vellum-dev/vellum-cli)).
 2. Install a terminal emulator:
    - **No Type Folio (touch keyboard)** — recommended to start:
      ```sh
-     opkg install fingerterm
+     vellum add fingerterm
      ```
    - **With a Type Folio** (landscape, physical keyboard):
      ```sh
-     opkg install reterm
+     vellum add reterm
      ```
-   Both are real Toltec packages; you can install both and try each.
+   Both are available as Vellum packages; you can install both and try each.
 3. Open the terminal app on the device and generate an SSH key, then copy it
    to the Mac:
    ```sh
@@ -150,8 +156,8 @@ Tips for a good e-ink experience:
 
 - Switch to `reterm` + Type Folio once you have one, for a landscape
   physical-keyboard experience.
-- A Toltec "draft" launcher entry so opening a notebook-like icon on the
-  reMarkable home screen launches the terminal straight into `remarklaude`,
-  one tap instead of typing a command.
+- A launcher entry (via Vellum, if/when one offers this) so opening a
+  notebook-like icon on the reMarkable home screen launches the terminal
+  straight into `remarklaude`, one tap instead of typing a command.
 - `mosh` instead of plain `ssh` for a connection that survives Wi-Fi drops
   without hanging.
